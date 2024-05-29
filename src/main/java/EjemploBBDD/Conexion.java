@@ -18,7 +18,6 @@ public class Conexion implements ConexionesBaseDatos {
             stm.setString(2, nombre);
             stm.setString(3, pais);
             stm.executeUpdate();
-            obtenerUsuariosPorPais(pais).add(new Usuario(dni, nombre, pais));
 
             System.out.println("Usuario creado");
         } catch (SQLException e) {
@@ -45,7 +44,6 @@ public class Conexion implements ConexionesBaseDatos {
             conexion = conectar();
             PreparedStatement stm = conexion.prepareStatement("UPDATE usuarios SET nombre = ?, pais = ? WHERE DNI = ?");
             stm.setString(1, nuevoNombre);
-            obtenerUsuariosPorPais(nuevoPais).add(new Usuario(dni, nuevoNombre, nuevoPais));
             stm.setString(2, nuevoPais);
             stm.setString(3, dni);
             int numFilas = stm.executeUpdate();
@@ -66,7 +64,6 @@ public class Conexion implements ConexionesBaseDatos {
             conexion = conectar();
             PreparedStatement stm = conexion.prepareStatement("DELETE FROM usuarios WHERE DNI = ?");
             stm.setString(1, dni);
-            obtenerUsuariosPorPais(dni).clear();
             int numFilas = stm.executeUpdate();
             if (numFilas == 1) {
                 System.out.println("Usuario borrado");
